@@ -1,6 +1,6 @@
 ## (c) Oleg Shvaikovsky
 ##     Exploratory Data Analysis
-##     week 1 ::: PLOT 2 
+##     week 1 ::: PLOT 3 
 ## ->  SANDBOX, week 1
 
 setwd("/Users/olegshvaikovskypro/R-Coursera/ExploratoryDataAnalysis/Week1")
@@ -21,9 +21,17 @@ DT <- paste(as.Date(MyData$Date), MyData$Time)
 MyData$Datetime <- as.POSIXct(DT, tz = "UTC")
 
 ## Creating the plot
-plot(MyData$Global_active_power ~ MyData$Datetime, type="l",
-     ylab="Global Active Power (kilowatts)", xlab="")
+with(MyData, {
+     plot(Sub_metering_1 ~ Datetime, type="l",
+          ylab="Global Active Power (kilowatts)", xlab="")
+     lines(Sub_metering_2 ~ Datetime, col = 'Red')
+     lines(Sub_metering_3 ~ Datetime, col = 'Blue')
+})
+
+## Adding a legend at topright
+legend("topright", col=c("black", "red", "blue"), lty=1, lwd=2, 
+       legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
 
 ## Saving to file
-dev.copy(png, file="plot2.png", height=480, width=480)
+dev.copy(png, file="plot3.png", height=480, width=480)
 dev.off()
